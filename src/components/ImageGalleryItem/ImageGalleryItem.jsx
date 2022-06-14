@@ -1,5 +1,7 @@
 import css from './ImageGalleryItem.module.css';
 import PropTypes from 'prop-types';
+
+
 const ImageGalleryItem = ({ image, onClick }) => {
   return (
     <li className={css.ImageGalleryItem}>
