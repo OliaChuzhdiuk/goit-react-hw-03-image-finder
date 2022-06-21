@@ -1,43 +1,46 @@
 import { Component } from 'react';
-import css from './Searchbar.module.css';
+import s from './Searchbar.module.css';
 import PropTypes from 'prop-types';
 
-class SearchForm extends Component {
-  state = { qwery: '' };
-
-  hendleChange = e => {
-    this.setState({ qwery: e.currentTarget.value });
+export default class Searchbar extends Component {
+  state = {
+    searchData: '',
   };
-  hendleSubmit = e => {
+
+  static propTypes = {
+    onSubmit: PropTypes.func.isRequired,
+  };
+
+  handleSubmit = e => {
     e.preventDefault();
-    this.props.onSubmit(this.state.qwery);
-    this.setState({ qwery: '' });
+    this.props.onSubmit(this.state.searchData);
+  };
+
+  handleChange = evt => {
+    const { value } = evt.target;
+    this.setState({ searchData: value });
   };
 
   render() {
+    const { handleChange, handleSubmit } = this;
+
     return (
-      <header className={css.Searchbar}>
-        <form onSubmit={this.hendleSubmit} className={css.SearchForm}>
-          <button type="submit" className={css.SearchFormButton}>
-            <span className={css.SearchFormButtonLabel}>Search</span>
+      <header className={s.Searchbar}>
+        <form className={s.SearchForm} onSubmit={handleSubmit}>
+          <button type="submit" className={s.SearchForm__button}>
+            <span className={s.SearchForm__button__label}>Search</span>
           </button>
 
           <input
-            className={css.SearchFormInput}
+            className={s.SearchForm__input}
             type="text"
             autoComplete="off"
             autoFocus
             placeholder="Search images and photos"
-            onChange={this.hendleChange}
+            onChange={handleChange}
           />
         </form>
       </header>
     );
   }
 }
-
-SearchForm.protoType = {
-  qwery: PropTypes.string,
-};
-
-export default SearchForm;
